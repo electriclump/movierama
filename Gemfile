@@ -52,11 +52,15 @@ gem 'omniauth' # Authentication
 gem 'omniauth-github'
 gem 'cancan'   # Authorisation
 
+gem 'sendgrid-actionmailer' #sendgrid integration for mail notifications
 
-# Debugger
-gem 'pry'
-gem 'pry-nav'
-gem 'pry-doc'
+group :development do
+  gem 'puma'
+  # Debugger
+  gem 'pry'
+  gem 'pry-nav'
+  gem 'pry-doc'
+end
 
 
 group :test do

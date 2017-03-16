@@ -52,11 +52,11 @@
             - if current_user && can?(:vote, movie)
               .mr-movie-voting.pull-right
                 - if current_user.likes?(movie)
-                  You like this movie 
+                  You like this movie
                   = link_to movie_vote_path(movie), method: :delete do
                     Unlike
                 - elsif current_user.hates?(movie)
-                  You hate this movie 
+                  You hate this movie
                   = link_to movie_vote_path(movie), method: :delete do
                     Unhate
                 - else
@@ -71,3 +71,15 @@
         .btn-group.btn-group-justified
           %a.btn.btn-primary{ href: new_movie_path }
             Add movie
+
+      %br
+      - if current_user && !current_user.has_email?
+        .panel.panel-default
+          .panel-body
+            %p
+              You don't have an active email address. Please make sure
+              your github account has a public email and
+              = link_to session_path, method: :patch do
+                reauthenticate
+              to update your account.
+

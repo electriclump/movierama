@@ -3,6 +3,11 @@ class VotesController < ApplicationController
     authorize! :vote, _movie
 
     _voter.vote(_type)
+
+    UserNotifier.new_vote(
+      movie: _movie, voter: current_user, vote: _type
+    ).deliver
+
     redirect_to root_path, notice: 'Vote cast'
   end
 

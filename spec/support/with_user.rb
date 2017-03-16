@@ -1,14 +1,15 @@
 require 'support/pages/home'
 
 module RspecSupportWithUser
-  def with_auth_mock
+  def with_auth_mock(email=nil)
     before do
       OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(
         :github,
         uid: '12345',
         info: {
-          name: 'John McFoo'
+          name: 'John McFoo',
+          email: email
         }
       )
     end
@@ -18,8 +19,8 @@ module RspecSupportWithUser
     end
   end
 
-  def with_logged_in_user
-    with_auth_mock
+  def with_logged_in_user(email: nil)
+    with_auth_mock(email)
 
     before do
       Pages::Home.new.tap do |page|

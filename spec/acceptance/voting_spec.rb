@@ -9,15 +9,16 @@ RSpec.describe 'vote on movies', type: :feature do
   let(:page) { Pages::MovieList.new }
 
   before do
-    author = User.create(
+    @author = User.create(
       uid:  'null|12345',
-      name: 'Bob'
+      name: 'Bob',
+      email: 'bob@bob.com'
     )
-    Movie.create(
+    @movie = Movie.create(
       title:        'Empire strikes back',
       description:  'Who\'s scruffy-looking?',
       date:         '1980-05-21',
-      user:         author
+      user:         @author
     )
   end
 
@@ -73,9 +74,24 @@ RSpec.describe 'vote on movies', type: :feature do
         page.like('The Party')
       }.to raise_error(Capybara::ElementNotFound)
     end
+
+    it 'sends an email notification after a like' do
+      expect {
+        page.like('Empire strikes back')
+      }.to change {ActionMailer::Base.deliveries.count}.by 1
+    end
+
+    it 'sends an email notification after a hate' do
+      expect {
+        page.hate('Empire strikes back')
+      }.to change {ActionMailer::Base.deliveries.count}.by 1
+    end
+
+    it 'does not send an email notification after an unvote' do
+      page.hate('Empire strikes back')
+      expect {
+        page.unhate('Empire strikes back')
+      }.to_not change {ActionMailer::Base.deliveries.count}
+    end
   end
-
 end
-
-
-

@@ -17,7 +17,7 @@ Github has a nice link. Right there, on the right of your page!
 
 #### Dependencies
 
-Install Ruby 2.1.2 if necessary (if you use `rbenv`, it will yell at you if you
+Install Ruby 2.2.2 if necessary (if you use `rbenv`, it will yell at you if you
 don't).
 
 Run `bundler` as usual:
@@ -30,6 +30,8 @@ should just work; otherwise change the value of `DB_URL` in `.env`.
 Check that everything works by seeding the database with a few users and movies:
 
     $ ./bin/seed
+
+ You'll also need a SendGrid API key in your environment with the name `SENDGRID_API_KEY`.
 
 
 #### Launching the app

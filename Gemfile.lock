@@ -103,6 +103,7 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.4.2)
+    mimemagic (0.3.2)
     mini_portile (0.6.0)
     minitest (5.4.2)
     msgpack (0.5.9)
@@ -150,6 +151,7 @@ GEM
       yard (~> 0.8)
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
+    puma (3.8.2)
     rack (1.5.2)
     rack-ssl (1.4.1)
       rack
@@ -226,7 +228,15 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    sendgrid-actionmailer (0.2.1)
+      mail (~> 2.5)
+      sendgrid-ruby (< 2.0)
+    sendgrid-ruby (1.1.6)
+      faraday (~> 0.9)
+      mimemagic
+      smtpapi (~> 0.1)
     slop (3.6.0)
+    smtpapi (0.1.0)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -280,15 +290,20 @@ DEPENDENCIES
   pry
   pry-doc
   pry-nav
+  puma
   rack-ssl
   rails (= 4.1.6)
   rails_12factor
   redis-rails
   rspec-rails
   sass-rails (~> 4.0.3)
+  sendgrid-actionmailer
   turbolinks
   uglifier (>= 1.3.0)
   unicorn
 
+RUBY VERSION
+   ruby 2.2.2p95
+
 BUNDLED WITH
-   1.10.6
+   1.14.6

@@ -1,7 +1,7 @@
 # Given an Omniauth hash, finds or creates Users.
 class UserRegistration
   def initialize(auth_hash)
-    @ran = @user = @created = nil
+    @ran = @user = @created = @failed = nil
     @auth_hash = auth_hash
   end
 
@@ -18,6 +18,11 @@ class UserRegistration
     @created
   end
 
+  def failed?
+    _run
+    @failed
+  end
+
   private
 
   def _run
@@ -27,18 +32,28 @@ class UserRegistration
       @auth_hash['uid']
     ]
 
-    if user = User.find(uid: uid).first
-      @user    = user
+    if @user = User.find(uid: uid).first
+      update_email unless @user.email.present?
+
       @created = false
     else
       @user = User.create(
-        uid:        uid, 
+        uid:        uid,
         name:       @auth_hash['info']['name'],
+        email:      @auth_hash['info']['email'],
         created_at: Time.current.utc.to_i
       )
       @created = true
     end
 
     @ran = true
+  end
+
+  def update_email
+    if @auth_hash['info']['email'].present?
+      @user.update(email: @auth_hash['info']['email'])
+    else
+      @failed = true
+    end
   end
 end
